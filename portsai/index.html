@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio with Floating Controls</title>
+<style>
+    /* ===== Base Styles ===== */
+    :root {
+        --primary-color: #2a9d8f;
+        --secondary-color: #01729f;
+        --accent-color: #e76f51;
+        --text-color: #603737;
+        --bg-color: #f8f9fa;
+        --section-bg: #f1c2c294;
+    }
+    body.dark {
+        --bg-color: #121212;
+        --text-color: #f1f1f1;
+        --primary-color: #ff9800;
+        --accent-color: #ff5722;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+    }
+    .container { max-width: 1200px; margin:0 auto; padding:0 20px; }
+
+    /* ===== Header ===== */
+    header { background-color: var(--secondary-color); color: white; padding: 20px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    nav { display:flex; justify-content:space-between; align-items:center; }
+    .logo { font-size:1.5rem; font-weight:bold; }
+    .nav-links { display:flex; list-style:none; }
+    .nav-links li { margin-left:20px; }
+    .nav-links a { color:white; text-decoration:none; transition: color 0.3s ease; }
+    .nav-links a:hover { color: var(--accent-color); }
+
+    /* ===== Hero Section ===== */
+    .hero { height:100vh; display:flex; align-items:center; justify-content:center; background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://picsum.photos/1200/600'); background-size: cover; background-position: center; color:white; text-align:center; }
+    .hero-content { max-width:800px; margin:0 auto; }
+    .hero h1 { font-size:3rem; margin-bottom:20px; }
+    .hero p { font-size:1.2rem; margin-bottom:30px; }
+    .btn { display:inline-block; background: var(--primary-color); color:white; padding:12px 24px; border:none; border-radius:5px; cursor:pointer; text-decoration:none; font-size:1rem; transition: background 0.3s ease; }
+    .btn:hover { background: var(--accent-color); }
+
+    /* ===== Sections ===== */
+    section { padding:80px 0; }
+    .section-title { text-align:center; margin-bottom:50px; }
+    .section-title h2 { font-size:2rem; color: var(--secondary-color); position:relative; padding-bottom:15px; }
+    .section-title h2::after { content:''; position:absolute; left:50%; bottom:0; transform:translateX(-50%); width:50px; height:3px; background-color: var(--primary-color); }
+
+    /* ===== About ===== */
+    .about-content { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    .about-img, .about-text { flex:1; min-width:300px; padding:20px; }
+    .about-img img { width:100%; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+
+    /* ===== Skills ===== */
+    .skills-container { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
+    .skill-card { background: var(--section-bg); padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); width:calc(33.333% - 20px); min-width:250px; text-align:center; transition: transform 0.3s ease; }
+    .skill-card:hover { transform:translateY(-10px); }
+    .skill-card i { font-size:2.5rem; color:var(--primary-color); margin-bottom:15px; }
+
+    /* ===== Projects ===== */
+    .projects-container { display:grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap:30px; }
+    .project-card { background: var(--section-bg); border-radius:10px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+    .project-card:hover { transform: translateY(-10px); }
+    .project-img { height:200px; overflow:hidden; }
+    .project-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.3s ease; }
+    .project-card:hover .project-img img { transform:scale(1.1); }
+    .project-content { padding:20px; }
+    .project-content h3 { margin-bottom:10px; color: var(--secondary-color); }
+    .project-links { display:flex; justify-content:space-between; margin-top:15px; }
+    .project-links a { color: var(--primary-color); text-decoration:none; font-weight:bold; transition: color 0.3s ease; }
+    .project-links a:hover { color: var(--accent-color); }
+
+    /* ===== Contact ===== */
+    .contact-content { display:flex; flex-wrap:wrap; justify-content:space-between; }
+    .contact-info, .contact-form { flex:1; min-width:300px; padding:20px; }
+    .contact-info h3 { margin-bottom:20px; color: var(--secondary-color); }
+    .contact-info p { margin-bottom:15px; }
+    .form-group { margin-bottom:20px; }
+    .form-group label { display:block; margin-bottom:5px; font-weight:bold; }
+    .form-group input, .form-group textarea { width:100%; padding:10px; border:1px solid #ddd; border-radius:5px; font-family:inherit; }
+    .form-group textarea { height:150px; resize:vertical; }
+
+    /* ===== Footer ===== */
+    footer { background-color: var(--secondary-color); color:white; padding:40px 0; text-align:center; }
+    .social-links { margin:20px 0; }
+    .social-links a { display:inline-block; color:white; margin:0 10px; font-size:1.5rem; transition: color 0.3s ease; }
+    .social-links a:hover { color: var(--accent-color); }
+    .footer-bottom { margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1); }
+
+    /* ===== Floating Controls ===== */
+    #floating-controls { position: fixed; bottom:20px; right:20px; display:flex; flex-direction:column; gap:10px; background: rgba(0,0,0,0.6); padding:10px; border-radius:12px; z-index:9999; cursor: grab; transition: all 0.2s ease; }
+    #floating-controls:active { cursor: grabbing; }
+    #floating-controls button { background: var(--primary-color); color:white; border:none; padding:10px; border-radius:8px; cursor:pointer; font-size:16px; transition: background 0.2s; }
+    #floating-controls button:hover { background:#555; }
+    #resetPosition { display:none; background:#6c757d; }
+    #resetPosition.show { display:block; animation:fadeIn 0.3s ease; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+    /* ===== Responsive ===== */
+    @media screen and (max-width:768px){ .nav-links{ display:none; } .hero h1{ font-size:2.5rem; } .skill-card{ width:calc(50% - 20px); } }
+    @media screen and (max-width:480px){ .skill-card{ width:100%; } .hero h1{ font-size:2rem; } }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">My Portfolio</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero" id="home">
+    <div style="width:300px; aspect-ratio:1/1; overflow:hidden; border-radius:50%; border:4px solid #333;">
+    <img src="C:/Users/gunis/OneDrive/사진/SaiVenkat/1234.JPG" 
+         alt="Profile" 
+         style="width:100%; height:100%; object-fit:cover;">
+  </div>
+    <div class="container hero-content">
+        <h1>Hi, I'm Sai Venkat Gunisetty</h1>
+        <p>I'm an Editor specializing in Photography</p>
+        <a href="#contact" class="btn">Get In Touch</a>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container">
+        <div class="section-title"><h2>About Me</h2></div>
+        <div class="about-content">
+            <div class="about-img"><img src="C:/Users/gunis/OneDrive/사진/IMG_6617.jpg" alt="Profile"></div>
+            <div class="about-text">
+                <h3>Who Am I?</h3>
+                <p>I am a passionate editor with experience in Photography. I specialize in photo/video editing and visual storytelling.</p>
+                <p>My goal is to create stunning visuals that inspire others. I believe in constant learning and creativity.</p>
+                <a href="#" class="btn">Download CV</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills" style="background-color:#f5f5f5;">
+    <div class="container">
+        <div class="section-title"><h2>My Skills</h2></div>
+        <div class="skills-container">
+<!-- <div class="skill-card">📸 Photography</div> -->
+<div class="skill-card" onclick="toggleGallery()">📸 Photography</div>
+
+<!-- Hidden Gallery -->
+<div id="photo-gallery" style="display:none; margin-top:20px;">
+  <img src="C:/Users/gunis/OneDrive/사진/IMG_20240918_153158.jpg" alt="Photo 1" style="width:200px; margin:10px; border-radius:8px;">
+  <img src="photos/photo2.jpg" alt="Photo 2" style="width:200px; margin:10px; border-radius:8px;">
+  <img src="photos/photo3.jpg" alt="Photo 3" style="width:200px; margin:10px; border-radius:8px;">
+</div>
+
+<script>
+  function toggleGallery() {
+    const gallery = document.getElementById("photo-gallery");
+    gallery.style.display = (gallery.style.display === "none" || gallery.style.display === "") 
+      ? "block" 
+      : "none";
+  }
+</script>
+
+<div class="skill-card">🎬 Video Editing</div>
+<div class="skill-card">🎨 Photoshop</div>
+<div class="skill-card">💻 Web Development</div>
+            <!-- <div class="skill-card"><i>💻</i><h3>Web Development</h3><p>HTML, CSS, JS, React</p></div>
+            <div class="skill-card"><i>🎨</i><h3>UI/UX Design</h3><p>Figma, Adobe XD</p></div>
+            <div class="skill-card"><i>📱</i><h3>Mobile Dev</h3><p>React Native</p></div> -->
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="container">
+        <div class="section-title"><h2>My Projects</h2></div>
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="project-img"><img src="https://picsum.photos/600/400?1" alt="Project 1"></div>
+                <div class="project-content"><h3>Project One</h3><p>Portfolio site built with HTML, CSS, JS.</p></div>
+            </div>
+            <div class="project-card">
+                <div class="project-img"><img src="https://picsum.photos/600/400?2" alt="Project 2"></div>
+                <div class="project-content"><h3>Project Two</h3><p>React app with interactive UI components.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="section-title"><h2>Contact Me</h2></div>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p>Email: gunisettysaivenkat@gmail.com.com</p>
+                <p>Phone: +91 6369275614</p>
+            </div>
+            <div class="contact-form">
+                <div class="form-group"><label>Name</label><input type="text"></div>
+                <div class="form-group"><label>Email</label><input type="email"></div>
+                <div class="form-group"><label>Message</label><textarea></textarea></div>
+                <button class="btn">Send Message</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="social-links"><a href="#">🌐</a><a href="#">🐦</a><a href="#">💼</a></div>
+    <div class="footer-bottom">© 2025 Sai Venkat Gunisetty</div>
+</footer>
+
+<!-- ===== Floating Controls ===== -->
+<div id="floating-controls">
+    <button id="toggleDark">🌙</button>
+    <button id="backToTop">⬆️</button>
+    <button id="resetPosition">♻️</button>
+</div>
+
+<script>
+    // Dark mode
+    document.getElementById('toggleDark').onclick = ()=> document.body.classList.toggle('dark');
+
+    // Back to top
+    document.getElementById('backToTop').onclick = ()=> window.scrollTo({top:0, behavior:'smooth'});
+
+    // Floating controls drag + reset
+    const controls=document.getElementById('floating-controls');
+    const resetBtn=document.getElementById('resetPosition');
+    let isDragging=false, offsetX=0, offsetY=0;
+
+    controls.addEventListener('mousedown', e=>{
+        if(e.target.tagName==='BUTTON')return;
+        isDragging=true;
+        offsetX=e.clientX-controls.offsetLeft;
+        offsetY=e.clientY-controls.offsetTop;
+    });
+    document.addEventListener('mousemove', e=>{
+        if(isDragging){
+            controls.style.left=(e.clientX-offsetX)+'px';
+            controls.style.top=(e.clientY-offsetY)+'px';
+            controls.style.bottom='auto'; controls.style.right='auto';
+        }
+    });
+    document.addEventListener('mouseup', ()=>{ if(isDragging){isDragging=false;} });
+
+    // Right-click to toggle reset button
+    controls.addEventListener('contextmenu', e=>{
+        e.preventDefault();
+        resetBtn.classList.toggle('show');
+    });
+
+    // Reset button
+    resetBtn.onclick=()=>{
+        controls.style.bottom='20px';
+        controls.style.right='20px';
+        controls.style.top='auto';
+        controls.style.left='auto';
+        resetBtn.classList.remove('show');
+    };
+</script>
+
+</body>
+</html>
